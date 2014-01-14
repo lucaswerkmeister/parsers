@@ -14,6 +14,6 @@ shared void run() {
         byte, ".", byte, ".", byte, ".", byte
     };
     String input = process.arguments.first else "127.0.0.1";
-    value result = Matcher(ip4).match("192.168.0.1");
+    value result = Matcher(ip4).match(input);
     print("'``input``' ``result.matched then "is" else "isn’t"`` a valid IPv4 address.");
 }
