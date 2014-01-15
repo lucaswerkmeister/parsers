@@ -1,11 +1,15 @@
 shared class Concatenation(
-    {PatternOrSugar*} patterns)
+    {PatternOrSugar*} patterns,
+    shared actual String name = "(``",".join(patterns.map(desugar).map(Pattern.name))``)")
     satisfies Pattern {
     
     {Pattern*} actualPatterns = patterns.map(desugar);
     
-    shared actual Integer? attemptMatch(Matcher matcher) {
-        // TODO implement
-        return nothing;
+    shared actual Match attemptMatch(Matcher matcher, {Match*} rejectedMatches) {
+        {Match*} matches = {
+            for (Pattern pattern in actualPatterns)
+                matcher.requireMatch(pattern)
+        };
+        return matcher.matchHere { matches; };
     }
 }
